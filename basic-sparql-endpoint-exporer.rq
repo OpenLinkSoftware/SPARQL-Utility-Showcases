@@ -1,0 +1,10 @@
+
+## Produces a Sampling of Entities (via ?sample) per Entity Type (via ?entityType) using SPARQL's SAMPLE() Aggregate Function
+
+SELECT (SAMPLE(?s) AS ?sample) (COUNT(1) AS ?count)  (?o AS ?entityType)
+WHERE {
+        ?s a ?o. 
+		FILTER (isIRI(?s)) 
+      } 
+GROUP BY ?o
+ORDER BY DESC (?count)
