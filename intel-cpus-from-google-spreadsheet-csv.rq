@@ -1,0 +1,16 @@
+# Uncomment if you want to replace data in a sandboxed Named Graph 
+# DEFINE get:soft "replace"
+# Uncomment if you want Virtuoso to use its built-in cache invalidation algorithm to updated data in sandboxed Named Graph 
+# DEFINE get:soft "soft"
+
+PREFIX cpu: <https://docs.google.com/spreadsheets/d/1NmrGjc8pcgh1S_0mFNABiQpSNjY6Jxm1lAOmcxHaldg/export?format=csv#>
+PREFIX dsn: <https://docs.google.com/spreadsheets/d/1NmrGjc8pcgh1S_0mFNABiQpSNjY6Jxm1lAOmcxHaldg/export?format=csv> 
+
+SELECT DISTINCT ?s AS ?processorID xsd:string(?model) AS ?modelName ?cores IRI(?amazonUrl)
+FROM dsn: 
+WHERE {
+       ?s cpu:Model ?model ;
+          cpu:Cores ?cores ;
+          cpu:Amazon_Link ?amazonUrl .
+       FILTER (CONTAINS(STR(?amazonUrl),"https:"))
+      } 
